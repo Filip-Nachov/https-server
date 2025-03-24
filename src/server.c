@@ -8,12 +8,17 @@
 
 #define PORT 8080
 
-int main() {
+int main(int argc, char const* argv[]) {
     // declare variables
     int sockfd, new_sockfd, Sbind, Slisten;
     struct sockaddr_in addr;
 
-    sockfd = socket(AF_LOCAL, SOCK_STREAM, 0);
+    if (sockfd = socket(AF_LOCAL, SOCK_STREAM, 0) < 0) {
+        printf("SOCKET CREATION FAILED\n");
+        exit(1);
+    }
+    
+
     printf("SOCKET CREATED\n");
     printf("sockfd: %d\n", sockfd);
 

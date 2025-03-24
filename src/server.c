@@ -16,7 +16,6 @@ int main() {
 
     int Sbind = bind(sockfd, (struct sockaddr*)&addr, sizeof(addr)); // bind
     printf("SOCKET BINDED\n");
-    printf("Socket bind: %d\n", Sbind);
 
     // listen
 

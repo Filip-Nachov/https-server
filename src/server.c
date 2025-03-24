@@ -18,8 +18,10 @@ int main() {
     printf("SOCKET BINDED\n");
 
     // listen
+    int Slisten = listen(sockfd, 3);
 
     // accept
+    int new_sockfd = accept(sockfd, NULL, NULL);
 
     return 0;
 }

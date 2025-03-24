@@ -6,14 +6,18 @@
 
 int main() {
     int sockfd = socket(AF_LOCAL, SOCK_STREAM, 0);
-    printf("socket created\n");
+    printf("SOCKET CREATED\n");
     printf("sockfd: %d\n", sockfd);
 
-    setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &(int){1}, sizeof(int));
-    printf("socket options set\n");
+    struct sockaddr_in addr;
+    addr.sin_family = AF_INET;
 
-    // bind the socket
-    
+    setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &(int){1}, sizeof(int));
+
+    int Sbind = bind(sockfd, (struct sockaddr*)&addr, sizeof(addr)); // bind
+    printf("SOCKET BINDED\n");
+    printf("Socket bind: %d\n", Sbind);
+
     // listen
 
     // accept

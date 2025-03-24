@@ -3,6 +3,8 @@
 #include <netinet/in.h>
 #include <netinet/ip.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #define PORT 8080
 

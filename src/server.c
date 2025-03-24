@@ -10,6 +10,7 @@ int main() {
     printf("sockfd: %d\n", sockfd);
 
     setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &(int){1}, sizeof(int));
+    printf("socket options set\n");
 
     // bind the socket
     

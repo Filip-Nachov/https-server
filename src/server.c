@@ -12,21 +12,28 @@
 int main(int argc, char const* argv[]) {
     // declare variables
     int sockfd, new_sockfd, Sbind, Slisten;
-    struct sockaddr_in addr;
+    ssize_t valread;
+    struct sockaddr_in address;
+    int opt = 1;
+    char buffer[1024] = { 0 };
+    socklen_t addrlen = sizeof(address);
 
     if (sockfd = socket(AF_LOCAL, SOCK_STREAM, 0) < 0) {
         perror("Socket creation failer");
         exit(EXIT_FAILURE);
     }
-
     printf("SOCKET CREATED\n");
     printf("sockfd: %d\n", sockfd);
 
-    addr.sin_family = AF_INET;
+    if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt))) {
+        perror("setsocketopt failed");
+        exit(EXIT_FAILURE);
+    }
+    address.sin_family = AF_INET;
+    address.sin_addr.s_addr = INADDR_ANY;
+    address.sin_port = htons(PORT);
 
-    setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &(int){1}, sizeof(int));
-
-    Sbind = bind(sockfd, (struct sockaddr*)&addr, sizeof(addr)); // bind
+    Sbind = bind(sockfd, (struct sockaddr*)&address, sizeof(address)); // bind
     printf("SOCKET BINDED\n");
 
     Slisten = listen(sockfd, 3);

@@ -4,6 +4,8 @@
 #include <netinet/ip.h>
 #include <stdio.h>
 
+#define PORT 8080
+
 int main() {
     int sockfd = socket(AF_LOCAL, SOCK_STREAM, 0);
     printf("SOCKET CREATED\n");

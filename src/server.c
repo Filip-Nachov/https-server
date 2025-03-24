@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 #define PORT 8080
 
@@ -14,10 +15,9 @@ int main(int argc, char const* argv[]) {
     struct sockaddr_in addr;
 
     if (sockfd = socket(AF_LOCAL, SOCK_STREAM, 0) < 0) {
-        printf("SOCKET CREATION FAILED\n");
-        exit(1);
+        perror("Socket creation failer");
+        exit(EXIT_FAILURE);
     }
-    
 
     printf("SOCKET CREATED\n");
     printf("sockfd: %d\n", sockfd);

@@ -41,4 +41,3 @@ int main(int argc, char const* argv[]) {
     new_sockfd = accept(sockfd, NULL, NULL);
 
     return 0;
-}

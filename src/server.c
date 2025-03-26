@@ -10,8 +10,7 @@
 #define PORT 8080
 
 int main(int argc, char const* argv[]) {
-    // declare variables
-    int sockfd, new_sockfd, Sbind, Slisten;
+    int sockfd, new_socket, Sbind, Slisten;
     ssize_t valread;
     struct sockaddr_in address;
     int opt = 1;
@@ -33,12 +32,30 @@ int main(int argc, char const* argv[]) {
     address.sin_addr.s_addr = INADDR_ANY;
     address.sin_port = htons(PORT);
 
-    Sbind = bind(sockfd, (struct sockaddr*)&address, sizeof(address)); // bind
+    if (bind(sockfd, (struct sockaddr*)&address, sizeof(address)) < 0) {
+       perror("BIND FAILED");
+       exit(EXIT_FAILURE);
+    }; 
     printf("SOCKET BINDED\n");
 
-    Slisten = listen(sockfd, 3);
+    if (listen(sockfd, 3) < 0) {
+        perror("LISTEN FAILED");
+        exit(EXIT_FAILURE);
+    }
 
-    new_sockfd = accept(sockfd, NULL, NULL);
+    if (new_socket = accept(sockfd, NULL, NULL) < 0) {
+        perror("ACCEPT FAILED");
+        exit(EXIT_FAILURE);
+    }
+
+    valread = read(new_socket, buffer, 1024 - 1);
+    printf("%s\n", buffer);
+    send(new_socket, buffer, strlen(buffer), 0);
+    printf("Hello message sent\n");
+
+    close(new_socket);
+
+    close(sockfd);
 
     return 0;
 }

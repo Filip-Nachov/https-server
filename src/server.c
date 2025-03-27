@@ -9,15 +9,15 @@
 
 #define PORT 8080
 
-int main(int argc, char const* argv[]) {
-    int sockfd, new_socket, Sbind, Slisten;
+int main() {
+    int sockfd, new_socket;
     ssize_t valread;
     struct sockaddr_in address;
     int opt = 1;
     char buffer[1024] = { 0 };
     socklen_t addrlen = sizeof(address);
 
-    if (sockfd = socket(AF_LOCAL, SOCK_STREAM, 0) < 0) {
+    if (-1 == (sockfd = socket(AF_INET, SOCK_DGRAM, 0))) {
         perror("Socket creation failer");
         exit(EXIT_FAILURE);
     }
@@ -32,7 +32,7 @@ int main(int argc, char const* argv[]) {
     address.sin_addr.s_addr = INADDR_ANY;
     address.sin_port = htons(PORT);
 
-    if (bind(sockfd, (struct sockaddr*)&address, sizeof(address)) < 0) {
+    if (-1 == (bind(sockfd, (struct sockaddr*)&address, sizeof(address)))) {
        perror("BIND FAILED");
        exit(EXIT_FAILURE);
     }; 
@@ -43,7 +43,7 @@ int main(int argc, char const* argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    if (new_socket = accept(sockfd, NULL, NULL) < 0) {
+    if (-1 == (new_socket = accept(sockfd, NULL, NULL))) {
         perror("ACCEPT FAILED");
         exit(EXIT_FAILURE);
     }

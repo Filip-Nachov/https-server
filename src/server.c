@@ -17,7 +17,8 @@ int main() {
     char buffer[1024] = { 0 };
     socklen_t addrlen = sizeof(address);
 
-    if (-1 == (sockfd = socket(AF_INET, SOCK_DGRAM, 0))) {
+    sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    if (sockfd < 0) {
         perror("Socket creation failer");
         exit(EXIT_FAILURE);
     }
@@ -31,6 +32,7 @@ int main() {
     address.sin_family = AF_INET;
     address.sin_addr.s_addr = INADDR_ANY;
     address.sin_port = htons(PORT);
+   // sockfd.htons(PORT);
 
     if (-1 == (bind(sockfd, (struct sockaddr*)&address, sizeof(address)))) {
        perror("BIND FAILED");

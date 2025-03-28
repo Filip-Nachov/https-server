@@ -43,8 +43,9 @@ int main() {
         perror("LISTEN FAILED");
         exit(EXIT_FAILURE);
     }
-
-    if (-1 == (new_socket = accept(sockfd, NULL, NULL))) {
+    
+    new_socket = accept(sockfd, NULL, NULL);
+    if (new_socket < 0) {
         perror("ACCEPT FAILED");
         exit(EXIT_FAILURE);
     }

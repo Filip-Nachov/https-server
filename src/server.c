@@ -9,24 +9,26 @@
 
 #define PORT 8080
 
+int sockfd, new_socket;
+ssize_t valread;
+struct sockaddr_in address;
+int opt = 1;
+char buffer[1024] = { 0 };
+socklen_t addrlen = sizeof(address);
+
+
 int main() {
-    int sockfd, new_socket;
-    ssize_t valread;
-    struct sockaddr_in address;
-    int opt = 1;
-    char buffer[1024] = { 0 };
-    socklen_t addrlen = sizeof(address);
 
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd < 0) {
-        perror("Socket creation failer");
+        perror("SOCKET");
         exit(EXIT_FAILURE);
     }
     printf("SOCKET CREATED\n");
     printf("sockfd: %d\n", sockfd);
 
     if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt))) {
-        perror("setsocketopt failed");
+        perror("setsocketopt");
         exit(EXIT_FAILURE);
     }
     address.sin_family = AF_INET;
@@ -34,19 +36,19 @@ int main() {
     address.sin_port = htons(PORT);
 
     if (-1 == (bind(sockfd, (struct sockaddr*)&address, sizeof(address)))) {
-       perror("BIND FAILED");
+       perror("BIND");
        exit(EXIT_FAILURE);
     }; 
     printf("SOCKET BINDED\n");
 
     if (listen(sockfd, 3) < 0) {
-        perror("LISTEN FAILED");
+        perror("LISTEN");
         exit(EXIT_FAILURE);
     }
     
     new_socket = accept(sockfd, NULL, NULL);
     if (new_socket < 0) {
-        perror("ACCEPT FAILED");
+        perror("ACCEPT");
         exit(EXIT_FAILURE);
     }
 
